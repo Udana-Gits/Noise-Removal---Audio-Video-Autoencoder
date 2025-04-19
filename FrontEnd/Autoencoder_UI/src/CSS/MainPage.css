@@ -1,0 +1,129 @@
+/* Reset all margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base document styling */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-color: #000000;
+}
+
+/* Main layout styling */
+.ams-split-container-mainpage {
+  display: flex; /* Changed from grid to flex */
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: absolute; /* Use absolute positioning */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
+}
+
+.ams-left-pane-mainpage {
+  flex: 1; /* Equal flex grow */
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: #000000;
+}
+
+.ams-left-pane-mainpage img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.ams-right-pane-mainpage {
+  flex: 1; /* Equal flex grow */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: #000000;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  
+}
+
+/* Typography */
+.ams-page-title-mainpage {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: #333;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Button styling */
+.ams-button-container-mainpage {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.ams-action-button-mainpage {
+  padding: 15px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background-color: #008000;
+  color: #000000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.ams-action-button-mainpage:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ams-action-button-mainpage:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .ams-split-container-mainpage {
+    flex-direction: column;
+  }
+  
+  .ams-left-pane-mainpage {
+    height: 30vh;
+    flex: 0 0 30vh;
+  }
+  
+  .ams-right-pane-mainpage {
+    flex: 1;
+    height: 70vh;
+    padding: 20px;
+  }
+  
+  .ams-page-title-mainpage {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+}
