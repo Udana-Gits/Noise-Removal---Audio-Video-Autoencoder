@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../CSS/mainPage.css'
-import leftbackground from '../Images/t2.png'
+import leftbackground from '../Images/t7.png'
 
 
 function MainPage() {
@@ -23,7 +23,7 @@ function MainPage() {
       <div className="background-img-mainpage">
         <div className="ams-split-container-mainpage">
           <div className="ams-left-pane-mainpage">
-            <img src={leftbackground} alt="Attendance System Background" />
+            <img src={leftbackground} alt="autoencoder System Background" />
           </div>
           <div className="ams-right-pane-mainpage">
             <div className="ams-button-container-mainpage">

@@ -1,0 +1,195 @@
+/* AutoencodeAudio.css */
+.aea-split-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #0D0D0D;
+  }
+  
+  .aea-left-pane {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    overflow-y: auto;
+    background-color: rgba(13, 13, 13, 0.9);
+    color: white;
+  }
+  
+  .aea-right-pane {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    overflow-y: auto;
+    background-color: #161616;
+  }
+  
+  .aea-page-title {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: #39FF14;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  
+  .aea-input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .aea-input-label {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-bottom: 8px;
+  }
+  
+  .aea-file-input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid #39FF14;
+    border-radius: 8px;
+    background-color: #1a1a1a;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .aea-file-input::-webkit-file-upload-button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #39FF14;
+    color: #000000;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .aea-clean-button {
+    padding: 15px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    background-color: #39FF14;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .aea-clean-button:hover {
+    background-color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    color: #39FF14;
+    border: #39FF14 1px solid;
+  }
+  
+  .aea-clean-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .aea-file-info {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: rgba(57, 255, 20, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid #39FF14;
+  }
+  
+  .aea-file-info p {
+    margin: 8px 0;
+    color: #ffffff;
+  }
+  
+  .aea-preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .aea-preview-title {
+    font-size: 1.8rem;
+    color: #39FF14;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .aea-audio-preview {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 8px;
+    margin-top: 20px;
+    background-color: #1a1a1a;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    border: 1px solid #39FF14;
+  }
+  
+  .aea-audio-preview::-webkit-media-controls-panel {
+    background-color: rgba(57, 255, 20, 0.1);
+  }
+  
+  .aea-audio-preview::-webkit-media-controls-play-button {
+    background-color: #39FF14;
+    border-radius: 50%;
+  }
+  
+  .aea-empty-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #666;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .aea-split-container {
+      flex-direction: column;
+    }
+    
+    .aea-left-pane {
+      height: 50vh;
+      flex: 0 0 auto;
+      padding: 20px;
+    }
+    
+    .aea-right-pane {
+      flex: 1;
+      height: 50vh;
+      padding: 20px;
+    }
+    
+    .aea-page-title {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+  
+    .aea-preview-title {
+      font-size: 1.4rem;
+    }
+  }
