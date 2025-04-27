@@ -10,7 +10,12 @@ html, body, #root {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  background-color: #000000;
+  background-color: #0D0D0D;
+  background-image: url('../Images/t8.png'); /* Replace with your image path */
+  background-size:cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  
 }
 
 /* Main layout styling */
@@ -32,7 +37,6 @@ html, body, #root {
   height: 100%;
   overflow: hidden;
   position: relative;
-  background-color: #000000;
 }
 
 .ams-left-pane-mainpage img {
@@ -54,8 +58,6 @@ html, body, #root {
   justify-content: center;
   align-items: center;
   padding: 40px;
-  background-color: #000000;
-  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   
 }
@@ -86,7 +88,7 @@ html, body, #root {
   font-weight: 600;
   border: none;
   border-radius: 8px;
-  background-color: #008000;
+  background-color: #39FF14;
   color: #000000;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -95,9 +97,11 @@ html, body, #root {
 }
 
 .ams-action-button-mainpage:hover {
-  background-color: #f0f0f0;
+  background-color: #000000;
   transform: translateY(-2px);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  color: #39FF14;
+  border: #39FF14 1px solid;
 }
 
 .ams-action-button-mainpage:active {
