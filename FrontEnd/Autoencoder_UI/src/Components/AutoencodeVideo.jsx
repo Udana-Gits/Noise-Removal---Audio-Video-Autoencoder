@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CSS/AutoencodeVideo.css';
+// import './CSS/AutoencodeVideo.css';
 
 function AutoencodeVideo() {
   const [selectedVideo, setSelectedVideo] = useState(null);
