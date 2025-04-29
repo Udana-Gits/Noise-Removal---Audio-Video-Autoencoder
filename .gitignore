@@ -1,1 +1,8 @@
 .idea
+env/
+.idea
+DIV2K/
+gaussian_noisy/
+results/
+salt_pepper_noisy/
+speckle_noisy/
