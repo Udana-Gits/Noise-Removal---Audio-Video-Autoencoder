@@ -1,5 +1,5 @@
 # Shared utilities for denoising models
-# This file contains common classes and functions used by all three denoising models
+# This file contains common classes and functions used by all denoising models
 
 import torch
 import torch.nn as nn
@@ -12,11 +12,14 @@ import os
 
 # Custom Dataset for denoising
 class DenoisingDataset(Dataset):
-    def __init__(self, noisy_dir, clean_dir="results"):
+    def __init__(self, noisy_dir, clean_dir="results", img_size=512):
         self.noisy_files = sorted(glob.glob(os.path.join(noisy_dir, "*.png")))
-        self.clean_files = sorted(glob.glob(os.path.join(clean_dir, "*.png")))
+        self.clean_dir = clean_dir
+        self.img_size = img_size
 
+        # Transform pipeline
         self.transform = transforms.Compose([
+            transforms.Resize((self.img_size, self.img_size)),
             transforms.ToTensor(),
         ])
 
@@ -28,8 +31,11 @@ class DenoisingDataset(Dataset):
         noisy_img = Image.open(self.noisy_files[idx]).convert('RGB')
         noisy_tensor = self.transform(noisy_img)
 
-        # Load clean image
-        clean_img = Image.open(self.clean_files[idx]).convert('RGB')
+        # Get corresponding clean image using the same filename
+        basename = os.path.basename(self.noisy_files[idx])
+        clean_file = os.path.join(self.clean_dir, basename)
+
+        clean_img = Image.open(clean_file).convert('RGB')
         clean_tensor = self.transform(clean_img)
 
         return noisy_tensor, clean_tensor
