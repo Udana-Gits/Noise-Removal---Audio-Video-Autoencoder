@@ -7,3 +7,8 @@ salt_pepper_noisy/
 speckle_noisy/
 Dataset2/
 gaussian_noisy_02/
+Real_ESRGAN-PyTorch/
+resized_clean_02/
+output_images/
+Real_ESRGAN-PyTorch/
+speckle_noisy_02/

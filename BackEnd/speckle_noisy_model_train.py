@@ -17,6 +17,7 @@ import glob
 
 from model_utils import DenoisingDataset, DenoisingAutoencoder, check_gpu
 
+
 # Custom SSIM Loss (same as before)
 class SSIM(nn.Module):
     def __init__(self, window_size=11, size_average=True):
@@ -63,10 +64,12 @@ class SSIM(nn.Module):
         self.channel = channel
         return self._ssim(img1, img2, window, self.window_size, channel, self.size_average)
 
+
 # Sharpening kernel
 sharpen_kernel = np.array([[0, -1, 0],
                            [-1, 5, -1],
                            [0, -1, 0]])
+
 
 def apply_sharpening(img_tensor):
     img_np = img_tensor.permute(1, 2, 0).cpu().numpy()
@@ -77,12 +80,30 @@ def apply_sharpening(img_tensor):
     sharpened_tensor = torch.from_numpy(sharpened).permute(2, 0, 1).float()
     return sharpened_tensor
 
+
 # Main training function
-def train_speckle_model(noisy_dir="speckle_noisy", num_epochs=50, batch_size=16):
+def train_speckle_model(noisy_dir="speckle_noisy", clean_dir="results", num_epochs=10, batch_size=16):
     print("\nTraining model for Speckle noise removal with sharpness preservation...")
+    print(f"Supporting image formats: PNG, JPG, JPEG, BMP")
+
+    # Create models directory if it doesn't exist
+    os.makedirs("models", exist_ok=True)
+
     device = check_gpu()
 
-    dataset = DenoisingDataset(noisy_dir)
+    # Check if any supported image files exist
+    supported_files = []
+    for ext in ['*.png', '*.jpg', '*.jpeg', '*.bmp']:
+        supported_files.extend(glob.glob(os.path.join(noisy_dir, ext)))
+
+    if len(supported_files) == 0:
+        print(
+            f"No supported image files found in {noisy_dir}. Please make sure you have .png, .jpg, .jpeg, or .bmp files.")
+        return None
+
+    print(f"Found {len(supported_files)} images for training.")
+
+    dataset = DenoisingDataset(noisy_dir, clean_dir)
     train_size = int(0.8 * len(dataset))
     val_size = len(dataset) - train_size
     train_dataset, val_dataset = torch.utils.data.random_split(dataset, [train_size, val_size])
@@ -167,11 +188,22 @@ def train_speckle_model(noisy_dir="speckle_noisy", num_epochs=50, batch_size=16)
 
     return model
 
+
 # Optional visualization function could be reused from salt_pepper script
 
 if __name__ == "__main__":
-    if not os.path.exists("speckle_noisy") or len(glob.glob("speckle_noisy/*.png")) == 0:
-        print("Speckle noisy images not found. Please run add_noise.py first.")
+    # Check if directory exists and if any supported images are present
+    noisy_dir = "speckle_noisy"
+    clean_dir = "results"
+
+    supported_files = []
+    if os.path.exists(noisy_dir):
+        for ext in ['*.png', '*.jpg', '*.jpeg', '*.bmp']:
+            supported_files.extend(glob.glob(os.path.join(noisy_dir, ext)))
+
+    if len(supported_files) == 0:
+        print(
+            f"No supported image files found in {noisy_dir}. Please run add_noise.py first or add .png, .jpg, .jpeg, or .bmp files.")
     else:
-        trained_model = train_speckle_model()
+        trained_model = train_speckle_model(noisy_dir, clean_dir)
         print("Training complete! Model saved.")
