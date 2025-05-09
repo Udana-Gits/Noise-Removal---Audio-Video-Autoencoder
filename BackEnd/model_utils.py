@@ -1,5 +1,5 @@
 # Shared utilities for denoising models
-# This file contains common classes and functions used by all three denoising models
+# This file contains common classes and functions used by all denoising models
 
 import torch
 import torch.nn as nn
@@ -12,11 +12,18 @@ import os
 
 # Custom Dataset for denoising
 class DenoisingDataset(Dataset):
-    def __init__(self, noisy_dir, clean_dir="results"):
-        self.noisy_files = sorted(glob.glob(os.path.join(noisy_dir, "*.png")))
-        self.clean_files = sorted(glob.glob(os.path.join(clean_dir, "*.png")))
+    def __init__(self, noisy_dir, clean_dir="results", img_size=512):
+        # Support multiple image formats (PNG, JPG, BMP)
+        self.noisy_files = []
+        for ext in ['*.png', '*.jpg', '*.jpeg', '*.bmp']:
+            self.noisy_files.extend(glob.glob(os.path.join(noisy_dir, ext)))
+        self.noisy_files = sorted(self.noisy_files)
+        self.clean_dir = clean_dir
+        self.img_size = img_size
 
+        # Transform pipeline
         self.transform = transforms.Compose([
+            transforms.Resize((self.img_size, self.img_size)),
             transforms.ToTensor(),
         ])
 
@@ -28,8 +35,27 @@ class DenoisingDataset(Dataset):
         noisy_img = Image.open(self.noisy_files[idx]).convert('RGB')
         noisy_tensor = self.transform(noisy_img)
 
-        # Load clean image
-        clean_img = Image.open(self.clean_files[idx]).convert('RGB')
+        # Get corresponding clean image using the same basename but potentially different extension
+        noisy_basename = os.path.basename(self.noisy_files[idx])
+        noisy_name_without_ext = os.path.splitext(noisy_basename)[0]
+
+        # Try to find the clean image with any supported extension
+        clean_file = None
+        for ext in ['.png', '.jpg', '.jpeg', '.bmp']:
+            possible_file = os.path.join(self.clean_dir, noisy_name_without_ext + ext)
+            if os.path.exists(possible_file):
+                clean_file = possible_file
+                break
+
+        # If we can't find a matching file, try using the same extension as the noisy file
+        if clean_file is None:
+            _, ext = os.path.splitext(noisy_basename)
+            clean_file = os.path.join(self.clean_dir, noisy_basename)
+
+        if not os.path.exists(clean_file):
+            raise FileNotFoundError(f"Clean image not found for {noisy_basename} in {self.clean_dir}")
+
+        clean_img = Image.open(clean_file).convert('RGB')
         clean_tensor = self.transform(clean_img)
 
         return noisy_tensor, clean_tensor
